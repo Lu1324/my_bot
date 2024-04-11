@@ -20,4 +20,4 @@ def generate_launch_description():
     ])
 
 # ros2 service call /start_motor std_srvs/srv/Empty {}
-# ros2 service call /start_motor std_srvs/srv/Empty {}
+# ros2 service call /stop_motor std_srvs/srv/Empty {}
