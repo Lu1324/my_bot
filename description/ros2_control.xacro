@@ -23,9 +23,10 @@
                 <state_interface name="position"/>
             </joint>
     </ros2_control>
+
     <gazebo> 
         <plugin name= "gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            <parameters>$(find my_bot)/config/my_controllers.yaml</parameters>
+            <parameters>/home/lui/ros_workspaces/dev_ws/src/my_bot/config/my_controllers.yaml</parameters>
         </plugin>
     </gazebo>
 
