@@ -3,12 +3,12 @@
 
     <joint name="lidar_joint" type="fixed">
         <parent link="chassis"/>
-        <child link="lidar"/>
+        <child link="lidar_frame"/>
         <origin xyz="0.08 0 0.13" rpy="0.0 0.0 0.0"/>
         
     </joint>
 
-    <link name="lidar">
+    <link name="lidar_frame">
         <visual>
             <geometry>
                 <cylinder radius="0.035" length="0.02"/>
@@ -25,7 +25,7 @@
         </xacro:inertial_cylinder>
     </link>
 
-    <gazebo reference="lidar">
+    <gazebo reference="lidar_frame">
         <material>Gazebo/Black</material>
 
         <sensor name="laser" type="ray">
@@ -50,7 +50,7 @@
                     <argument>~/out:=scan</argument>
                 </ros>
                 <output_type>sensor_msgs/LaserScan</output_type>
-                <frame_name>laser_frame</frame_name>
+                <frame_name>lidar_frame</frame_name>
             </plugin>
         </sensor>
     </gazebo>
