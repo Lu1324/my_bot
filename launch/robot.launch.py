@@ -29,16 +29,13 @@ def generate_launch_description():
                     get_package_share_directory(package_name),'launch','rsp.launch.py'
                 )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control':'true'}.items()
     )
-    gazebo_params_path = os.path.join(
-                    get_package_share_directory(package_name),'config','gazebo_params.yaml'
-                )
 
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
     controller_params_file = os.path.join(get_package_share_directory(package_name), 'config', 'my_controllers.yaml')
 
     controller_manager = Node(
         package='controller_manager', 
-        executable='ros2_control_node',  # TODO where does that come from
+        executable='ros2_control_node',  
         parameters=[{'robot_description':robot_description}, controller_params_file])
 
     delayed_controller_manager = TimerAction(period=3.0, actions=[controller_manager])
