@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
-    <!-- <ros2_control name="RealController" type="system">
+    <ros2_control name="RealController" type="system">
             <hardware>
                 <plugin>diffdrive_arduino/DiffDriveArduinoHardware</plugin>
                 <param name="left_wheel_name">left_wheel_joint</param>
@@ -9,7 +9,7 @@
                 <param name="loop_rate">30</param>
                 <param name="device">/dev/ttyACM0</param>
                 <param name="baud_rate">57600</param>
-                <param name="timeout">1000</param>
+                <param name="timeout_ms">1000</param>
                 <param name="enc_counts_per_rev">40</param>
             </hardware>
             <joint name="left_wheel_joint">
@@ -28,10 +28,10 @@
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
             </joint>
-    </ros2_control>  -->
+    </ros2_control> 
 
 
-    <ros2_control name="controller" type="system">
+    <!-- <ros2_control name="controller" type="system">
             <hardware>
                 <plugin>gazebo_ros2_control/GazeboSystem</plugin>
 
@@ -61,6 +61,6 @@
             <parameters>/home/lui/ros_workspaces/dev_ws/src/my_bot/config/my_controllers.yaml</parameters>
         </plugin>
     </gazebo>
-
+ -->
 
 </robot>
