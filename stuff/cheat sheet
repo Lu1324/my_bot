@@ -1,0 +1,201 @@
+cheat sheet:
+sudo apt install ros-iron-xacro
+sudo apt install python3-colcon-common-extensions
+sudo apt install ros-iron-gazebo-ros-pkgs
+sudo apt install ros-iron-ros2-control ros-iron-ros2-controllers ros-iron-gazebo-ros2-control
+sudo apt indtall ros-iron-slam-toolbox
+sudo apt install ros-iron-navigation2 ros-iron-nav2-bringup ros-iron-turtlebot3*
+
+build workspace:
+colcon build --symlink-install
+
+create package:
+ros2 pkg create --build-type ament_cmake my_package
+
+git push from inside my_package:
+git init
+git add .
+git commit -m "commit"
+git branch -M main
+git remote add origin git@github.com:<GITHUB_USERNAME>/<REPO_NAME>.git
+git push -u origin main
+
+-----------
+create ws mit git
+mkdir ws
+cd ws
+mkdir src
+cd src
+cd ..
+colcon build --symlink-install
+
+-----------
+!!! for development
+
+SETUP
+resolve dependencies:
+    rosdep install -i --from-path src --rosdistro iron -y
+
+build ws:
+    colcon build
+new terminal -> source overlay:
+    cd ws
+    source install/setup.bash
+
+-----------
+
+-----------
+create python package in src:
+ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
+
+robot_state_publisher with URDF file:
+ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro path/to/my/xacro/file.urdf.xacro)"
+
+launch gazebo with ros2
+ros2 launch gazebo_ros gazebo.launch.py world:=src/robot_testing/worlds/world6.world
+
+spawn
+ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity some_name
+
+
+close all processes
+sudo killall -9 gazebo gzserver gzclient
+
+-----------
+rviz
+in ws:
+    colcon build --symlink-install (only if files were added)
+    source install/setup.bash
+    ros2 launch my_bot rsp.launch.py
+new terminal:
+    rviz2
+new terminal:
+    ros2 run joint_state_publisher_gui joint_state_publisher_gui
+-----------
+
+-----------
+gazebo:
+lauch robot state publisher
+    ros2 launch my_bot rsp.launch.py use_sim_time:=true
+run gazebo
+    ros2 launch gazebo_ros gazebo.launch.py
+spawn robot
+    ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity robot_name
+
+OR
+sorce install/setup.bash (1x am anfang)
+colcon build
+ros2 launch my_bot launch_sim.launch.py
+ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+-----------
+
+-----------
+motor test launch
+sudo adduser pi dialout
+sudo apt install python3-serial
+pyserial-miniterm -e /dev/ttyACM0 57600
+
+-----------
+
+-----------
+lidar test launch
+colcon build
+new terminal:
+source install/setup.bash
+ros2 launch my_bot rsp.launch.py
+new terminal:
+rviz2
+ros2 launch my_bot launch_sim.launch.py world:=src/my_robot/worlds/name_of_world
+ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+pi:
+ros2 run rplidar_ros rplidar_composition --ros-args -p serial_port:=/dev/ttyUSB0 -p frame_id:=laser_frame -p angle_compensate:=true -p scan_mode:=Standard
+OR ros2 launch rplidar.launch.py
+dev:
+rviz2
+add laserscan
+topic: /scan
+fixed frame: /laser_frame
+
+killall rplidar_composition
+
+terminal:
+ros2 service call /stop_motor std_srvs/srv/Empty
+ros2 service call /start_motor std_srvs/srv/Empty 
+-----------
+
+-----------
+...
+ros2 launch my_bot launch_sim.launch.py
+ros2 control list_hardware_interfaces
+ros2 run controller_manager spawner diff_cont
+ros2 run controller_manager spawner joint_broad
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_cont/cmd_vel_unstamped
+
+-----------
+
+-----------
+RUN THE ROBOT
+pi:
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch my_bot robot.launch.py
+ros2 launch my_bot rplidar.launch.py
+dev:
+rviz2
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_cont/cmd_vel_unstamped
+-----------
+
+-----------
+slam
+sim:
+ros2 launch my_bot launch_sim.launch.py world:=./src/my_bot/worlds/cylinder.world 
+rviz2
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_cont/cmd_vel_unstamped
+ros2 launch slam_toolbox online_async_launch.py params_file:=./src/my_bot/config/mapper_params_online_async.yaml use_sim_time:=true
+- add map in rviz
+- set topic to /map
+- fixed frame odom: robot stays, map jumps
+- fixed frame map: map stays, robot jumps
+- add new panel: slam toolbox plugin
+- rewatch for localization
+
+real:
+pi:
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch my_bot robot.launch.py
+ros2 launch my_bot rplidar.launch.py
+dev:
+rviz2
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_cont/cmd_vel_unstamped
+ros2 launch slam_toolbox online_async_launch.py params_file:=./src/my_bot/config/mapper_params_online_async.yaml use_sim_time:=false
+if wifi slow, run on pi itself
+change grid size in params file
+-----------
+amcl: toggle map on and off
+Reliability: Reliable
+durability: Transient local
+- rewatch slam vid for amcl intro
+-----------
+
+-----------
+generelles Verständnis
+python3 -m serial.tools.list_ports
+ros2 topic list
+ros2 control list_controllers
+ros2 control list_hardware_interfaces
+rqt_graph
+ros2 service list
+always check use_sim_time!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+-----------
+
+-----------
+for doku:
+change sim_time!!
+Quellen für ros2_control files, slam files
+difference map, odom, base_link, base_footprint
+online, asynchronous -> Beispiel in repo vorhanden
+Ceres solver citation under ceres-solver.org
+
+
