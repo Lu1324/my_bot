@@ -1,0 +1,20 @@
+
+workspace
+├── build
+├── extra
+├── install
+└── src
+    └── my_bot
+        ├── config
+        │   ├── my_controllers.yaml
+        │   └── ...
+        ├── description
+        │   ├── robot.urdf.xacro
+        │   ├── ros2_control.xacro
+        │   └── ...
+        ├── launch
+        │   ├── robot.launch.py
+        │   └── ...
+        └── worlds
+        │   └── simulation_test.world
+        └── ...
