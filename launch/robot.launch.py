@@ -50,9 +50,9 @@ def generate_launch_description():
         executable='robot_state_publisher',
         output='screen',
         parameters=[{'robot_description': robot_description_config, 'use_sim_time': False}], #, 'use_sim_time': use_sim_time]
-        remappings=[
-            ("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
-        ],
+        # remappings=[
+        #     ("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
+        # ],
     )
     delayed_controller_manager = TimerAction(period=3.0, actions=[controller_manager])
     joint_broad_spawner = Node(
