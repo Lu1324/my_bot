@@ -1,5 +1,3 @@
-# script for easy startup
-
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -49,10 +47,10 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        parameters=[{'robot_description': robot_description_config, 'use_sim_time': False}], #, 'use_sim_time': use_sim_time]
-        # remappings=[
-        #     ("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
-        # ],
+        parameters=[{'robot_description': robot_description_config, 'use_sim_time': False}],
+        remappings=[
+            ("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
+        ],
     )
     delayed_controller_manager = TimerAction(period=3.0, actions=[controller_manager])
     joint_broad_spawner = Node(
@@ -80,11 +78,27 @@ def generate_launch_description():
         )
     )
     
+    node_rplidar_ros = Node(
+        package='rplidar_ros',
+        executable='rplidar_composition',
+        output='screen',
+        parameters=[{'serial_port': '/dev/ttyUSB0', 
+            'frame_id': 'laser_frame', 
+            'angle_compensate': True, 
+            'scan_mode': 'Standard'}]
+    )
 
-    # Launch them all!
+    delayed_rplidar = RegisterEventHandler(
+        event_handler = OnProcessExit(
+            target_action=diff_drive_spawner,
+            on_exit=[node_rplidar_ros],
+        )
+    )
+    
     return LaunchDescription([
         controller_manager,
         node_robot_state_publisher,
         joint_broad_spawner,
         delayed_diff_drive_spawner,
+        delayed_rplidar,
     ])
