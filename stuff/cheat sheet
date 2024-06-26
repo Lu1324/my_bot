@@ -186,6 +186,8 @@ ros2 control list_controllers
 ros2 control list_hardware_interfaces
 rqt_graph
 ros2 service list
+ros2 topic echo /joint_states
+
 always check use_sim_time!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 -----------
@@ -198,4 +200,11 @@ difference map, odom, base_link, base_footprint
 online, asynchronous -> Beispiel in repo vorhanden
 Ceres solver citation under ceres-solver.org
 
+Problem:
+fährt nicht ordentlich rückwärts in rviz:
+Lösungen:
 
+updaterate wieder auf 30?
+debug array aus?
+
+nicht langsamer als 0.4
