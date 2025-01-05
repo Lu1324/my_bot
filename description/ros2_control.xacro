@@ -66,8 +66,8 @@
 
     <gazebo> 
         <plugin name= "gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            <parameters>/home/lui/ros_workspaces/dev_ws/src/my_bot/config/my_controllers.yaml</parameters>
-            <parameters>/home/lui/ros_workspaces/dev_ws/src/my_bot/config/gazebo_controller_sim_time.yaml</parameters>
+            <parameters>../config/my_controllers.yaml</parameters>
+            <parameters>../config/gazebo_controller_sim_time.yaml</parameters>
         </plugin>
     </gazebo>
  
