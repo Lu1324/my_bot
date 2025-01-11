@@ -1,11 +1,16 @@
 ## Einführung
+
 Projekt zur Kartografierung der Umgebung mit Hilfe eines Roboters 
+
 Ausführbar mit ROS 2 Iron auf Ubuntu 22.06 (MATE)
+
 ausführliche Dokumentation in Studienarbeit "Praktische Umsetzung eines ferngesteuerten
 Roboterautos mit SLAM-System"
 
 ## Voraussetzungen
-Arduino mit Code "ros_Arduino_motor_control"
+
+Arduino mit Code aus "Arduino_motor_control"
+
 Raspberry Pi + PC beide mit Ubuntu und ROS 2
 
 ## Launch
