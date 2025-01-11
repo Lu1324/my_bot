@@ -1,7 +1,26 @@
-## Robot Package Template
+## Einführung
+Projekt zur Kartografierung der Umgebung mit Hilfe eines Roboters 
+Ausführbar mit ROS 2 Iron auf Ubuntu 22.06 (MATE)
+ausführliche Dokumentation in Studienarbeit "Praktische Umsetzung eines ferngesteuerten
+Roboterautos mit SLAM-System"
 
-This is a GitHub template. You can make your own copy by clicking the green "Use this template" button.
+## Voraussetzungen
+Arduino mit Code "ros_Arduino_motor_control"
+Raspberry Pi + PC beide mit Ubuntu und ROS 2
 
-It is recommended that you keep the repo/package name the same, but if you do change it, ensure you do a "Find all" using your IDE (or the built-in GitHub IDE by hitting the `.` key) and rename all instances of `my_bot` to whatever your project's name is.
+## Launch
+Auf Raspberry Pi (Roboter) ausführen:
+'''
+source / opt / ros / < distro >/ setup . bash # not needed if added to . bashrc
+colcon build -- symlink - install
+source setup / install . bash
+ros2 launch my_bot robot . launch . py
+'''
 
-Note that each directory currently has at least one file in it to ensure that git tracks the files (and, consequently, that a fresh clone has direcctories present for CMake to find). These example files can be removed if required (and the directories can be removed if `CMakeLists.txt` is adjusted accordingly).
+auf PC ausführen:
+'''
+source / opt / ros / < distro >/ setup . bash # not needed if added to . bashrc
+colcon build -- symlink - install
+source setup / install . bash
+ros2 launch my_bot robot . launch . py
+'''
