@@ -39,13 +39,11 @@
     </material>
 
     <!-- BASE LINK -->
-
     <link name="base_link">
-
     </link>
 
-    <!-- BASE_FOOTPRINT LINK -->
 
+    <!-- BASE_FOOTPRINT LINK -->
     <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
         <child link="base_footprint"/>
@@ -57,7 +55,6 @@
 
 
     <!-- CHASSIS LINK -->
-
     <joint name="chassis_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis"/>
@@ -87,8 +84,8 @@
         <material>Gazebo/Orange</material>
     </gazebo>
 
-    <!-- LEFT WHEEL LINK -->
 
+    <!-- LEFT WHEEL LINK -->
     <joint name="left_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="left_wheel"/>
@@ -118,10 +115,7 @@
     </gazebo>
 
 
-
-
     <!-- RIGHT WHEEL LINK -->
-
     <joint name="right_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="right_wheel"/>
@@ -152,7 +146,6 @@
 
 
     <!-- CASTER WHEEL LINK -->
-
     <joint name="caster_wheel_joint" type="fixed">
         <parent link="chassis"/>
         <child link="caster_wheel"/>
